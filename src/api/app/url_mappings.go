@@ -6,6 +6,6 @@ import (
 )
 
 func mapUrls() {
-	router.GET("/macro", polo.Polo)
+	router.GET("/macro", polo.Marco)
 	router.POST("/repositories", repositories.CreateRepo)
 }
