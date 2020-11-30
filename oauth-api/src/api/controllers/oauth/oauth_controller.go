@@ -1,7 +1,10 @@
 package oauth
 
 import (
+	"net/http"
+
 	"github.com/Seanlinsanity/golang-microservices-practice/oauth-api/src/api/domain/oauth"
+	"github.com/Seanlinsanity/golang-microservices-practice/oauth-api/src/api/services"
 	"github.com/Seanlinsanity/golang-microservices-practice/src/api/utils/errors"
 	"github.com/gin-gonic/gin"
 )
@@ -14,4 +17,22 @@ func CreateAccessToken(c *gin.Context) {
 		return
 	}
 
+	token, err := services.OauthService.CreateAccessToken(request)
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+
+	c.JSON(http.StatusOK, token)
+}
+
+func GetAccessToken(c *gin.Context) {
+	tokenId := c.Param("token_id")
+	token, err := services.OauthService.GetAccessToken(tokenId)
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+
+	c.JSON(http.StatusOK, token)
 }
